@@ -25,8 +25,8 @@ public class EmailService {
 
     public Mono<String> sendEmail(EmailRequest request) {
         Map<String, Object> payload = Map.of(
-                "sender", Map.of("name", "Seu App", "email", "email@dominio.com"), // Alterar para email HardwareTech
-                "to", new Map[]{ Map.of("email", request.toEmail, "name", request.toName) },
+                "sender", Map.of("name", "Seu App", "email", "azenithteste@gmail.com"), // Alterar para email HardwareTech
+                "to", new Map[]{Map.of("email", request.toEmail, "name", request.toName)},
                 "subject", request.subject,
                 "htmlContent", "<html><body>" + request.content + "</body></html>"
         );
@@ -36,7 +36,11 @@ public class EmailService {
                 .header("api-key", apiKey)
                 .header("Content-Type", "application/json")
                 .bodyValue(payload)
-                .retrieve()
-                .bodyToMono(String.class);
+                .retrieve() // Inicia recuperação da resposta
+                .bodyToMono(String.class)
+                .onErrorResume(e -> {
+                    System.err.println("Error sending email: " + e.getMessage());
+                    return Mono.error(new RuntimeException("Failed to send email"));
+                });
     }
 }

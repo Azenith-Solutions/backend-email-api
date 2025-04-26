@@ -13,7 +13,6 @@ import reactor.core.publisher.Mono;
 @RestController
 @RequestMapping("/api/email")
 public class EmailController {
-
     @Autowired
     private EmailService emailService;
 
