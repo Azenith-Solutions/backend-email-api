@@ -1,6 +1,7 @@
 package com.azenith.backendemailapi.service;
 
 import com.azenith.backendemailapi.model.EmailRequest;
+import com.azenith.backendemailapi.observer.EmailNotication;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.web.reactive.function.client.WebClient;
@@ -18,17 +19,19 @@ public class EmailService {
     private String apiUrl;
 
     private final WebClient webClient;
+    private final EmailNotication emailNotication;
 
-    public EmailService(WebClient.Builder webClientBuilder) {
+    public EmailService(WebClient.Builder webClientBuilder, EmailNotication emailNotication) {
         this.webClient = webClientBuilder.build();
+        this.emailNotication = new EmailNotication();
     }
 
     public Mono<String> sendEmail(EmailRequest request) {
         Map<String, Object> payload = Map.of(
-                "sender", Map.of("name", "Seu App", "email", "azenithteste@gmail.com"), // Alterar para email HardwareTech
-                "to", new Map[]{Map.of("email", request.toEmail, "name", request.toName)},
-                "subject", request.subject,
-                "htmlContent", "<html><body>" + request.content + "</body></html>"
+                "sender", Map.of("name", "Seu App", "email", "azenithsolutions@gmail.com"), // Alterar para email HardwareTech
+                "to", new Map[]{Map.of("email", request.getToEmail(), "name", request.getToName())},
+                "subject", request.getSubject(),
+                "htmlContent", "<html><body>" + request.getContent() + "</body></html>"
         );
 
         return webClient.post()
