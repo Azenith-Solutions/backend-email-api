@@ -1,0 +1,9 @@
+spring:
+  config:
+    import: optional:file:.env.development[.properties]
+server:
+  port: 8081
+api:
+  brevo:
+    key: ${BREVO_API_KEY}
+    url: ${BREVO_API_URL}

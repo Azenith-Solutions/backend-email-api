@@ -12,10 +12,10 @@ import java.util.Map;
 @Service
 public class EmailService {
 
-    @Value("${BREVO.API.KEY}")
+    @Value("${api.brevo.key}")
     private String apiKey;
 
-    @Value("${BREVO.API.URL}")
+    @Value("${api.brevo.url}")
     private String apiUrl;
 
     private final WebClient webClient;

@@ -34,3 +34,7 @@ build/
 
 ## Application Props
 src/main/resources/application.properties
+
+### enviroment
+.env.development
+.env.production
